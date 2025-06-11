@@ -2,21 +2,34 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::doc_markdown, clippy::if_not_else, clippy::non_ascii_literal)]
 
-use rustscan::benchmark::{Benchmark, NamedTimer};
-use rustscan::input::{self, Config, Opts, ScriptsRequired};
-use rustscan::port_strategy::PortStrategy;
-use rustscan::scanner::Scanner;
-use rustscan::scripts::{init_scripts, Script, ScriptFile};
-use rustscan::{detail, funny_opening, output, warning};
+mod address;
+mod benchmark;
+mod input;
+mod port_strategy;
+mod scanner;
+mod scripts;
 
-use colorful::{Color, Colorful};
+mod generated;
+
+mod tui; // if you're using this
+
+
+use crate::input::{Config, Opts, ScriptsRequired};
+use crate::port_strategy::PortStrategy;
+use crate::scanner::Scanner;
+use crate::scripts::{init_scripts, Script, ScriptFile};
+use crate::address::parse_addresses;
+use crate::benchmark::{Benchmark, NamedTimer};
+
+
+
+
+//use colorful::{Color, Colorful};
 use futures::executor::block_on;
 use std::collections::HashMap;
 use std::net::IpAddr;
 use std::string::ToString;
 use std::time::Duration;
-
-use rustscan::address::parse_addresses;
 
 extern crate colorful;
 extern crate dirs;
@@ -193,32 +206,9 @@ fn main() {
 
 /// Prints the opening title of RustScan
 #[allow(clippy::items_after_statements, clippy::needless_raw_string_hashes)]
-fn print_opening(opts: &Opts) {
-    debug!("Printing opening");
-    let s = r#".----. .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
-| {}  }| { } |{ {__ {_   _}{ {__  /  ___} / {} \ |  `| |
-| .-. \| {_} |.-._} } | |  .-._} }\     }/  /\  \| |\  |
-`-' `-'`-----'`----'  `-'  `----'  `---' `-'  `-'`-' `-'
-The Modern Day Port Scanner."#;
-
-    println!("{}", s.gradient(Color::Green).bold());
-    let info = r#"________________________________________
-: http://discord.skerritt.blog         :
-: https://github.com/RustScan/RustScan :
- --------------------------------------"#;
-    println!("{}", info.gradient(Color::Yellow).bold());
-    funny_opening!();
-
-    let config_path = opts
-        .config_path
-        .clone()
-        .unwrap_or_else(input::default_config_path);
-
-    detail!(
-        format!("The config file is expected to be at {config_path:?}"),
-        opts.greppable,
-        opts.accessible
-    );
+fn print_opening(_opts: &Opts) {
+    // Banner and links removed
+    // println!("RustScanner started..."); // optional minimal message
 }
 
 #[cfg(unix)]
