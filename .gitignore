@@ -1,0 +1,37 @@
+# === Rust Defaults ===
+/target
+**/*.rs.bk
+
+# === Cargo Specific ===
+Cargo.lock
+/.cargo/
+.cargo/
+*.crate
+
+# === Generated Files ===
+src/generated.rs
+nmap-payloads
+
+# === Build Script Artifacts ===
+build.rs.bak
+
+# === IDE/Editor Junk ===
+*.swp
+*.swo
+*.swn
+*.tmp
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# === OS Metadata ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Tests & Coverage ===
+/coverage/
+/*.profraw

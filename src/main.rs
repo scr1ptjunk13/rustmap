@@ -13,16 +13,12 @@ mod generated;
 
 mod tui; // if you're using this
 
-
+use crate::address::parse_addresses;
+use crate::benchmark::{Benchmark, NamedTimer};
 use crate::input::{Config, Opts, ScriptsRequired};
 use crate::port_strategy::PortStrategy;
 use crate::scanner::Scanner;
 use crate::scripts::{init_scripts, Script, ScriptFile};
-use crate::address::parse_addresses;
-use crate::benchmark::{Benchmark, NamedTimer};
-
-
-
 
 //use colorful::{Color, Colorful};
 use futures::executor::block_on;

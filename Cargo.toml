@@ -61,7 +61,3 @@ path = "src/main.rs"
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ["cfg(tarpaulin_include)"] }
-
-[[bench]]
-name = "benchmark_portscan"
-harness = false
