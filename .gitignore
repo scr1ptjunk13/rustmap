@@ -10,7 +10,6 @@ Cargo.lock
 
 # === Generated Files ===
 src/generated.rs
-nmap-payloads
 
 # === Build Script Artifacts ===
 build.rs.bak

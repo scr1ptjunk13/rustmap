@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Default values
+ADDR=""
+PORT_RANGE=""
+UDP_MODE=false
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --)
+            shift
+            ;;  # skip the `--`
+        -a)
+            ADDR="$2"
+            shift 2
+            ;;
+        -r)
+            PORT_RANGE="$2"
+            shift 2
+            ;;
+        --udp)
+            UDP_MODE=true
+            shift
+            ;;
+        *)
+            echo "Unknown argument: $1"
+            exit 1
+            ;;
+    esac
+done
+
+# Validate inputs
+if [[ -z "$ADDR" ]]; then
+    echo "Error: IP address (-a) is required."
+    exit 1
+fi
+
+if [[ -z "$PORT_RANGE" ]]; then
+    echo "Error: Port range (-r) is required."
+    exit 1
+fi
+
+# Run nmap
+echo "Running rustmap on $ADDR with ports $PORT_RANGE using $( $UDP_MODE && echo "UDP" || echo "TCP" ) scan"
+if $UDP_MODE; then
+    sudo nmap -sU -p "$PORT_RANGE" "$ADDR"
+else
+    sudo nmap -sS -p "$PORT_RANGE" "$ADDR"
+fi

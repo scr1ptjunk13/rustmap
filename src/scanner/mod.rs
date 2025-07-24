@@ -136,6 +136,7 @@ impl Scanner {
         socket: SocketAddr,
         udp_map: BTreeMap<Vec<u16>, Vec<u8>>,
     ) -> io::Result<SocketAddr> {
+        //(OK(SocketAddr), Err)
         if self.udp {
             return self.scan_udp_socket(socket, udp_map).await;
         }
@@ -179,8 +180,9 @@ impl Scanner {
     ) -> io::Result<SocketAddr> {
         let mut payload: Vec<u8> = Vec::new();
         for (key, value) in udp_map {
+            //udp_map is no longer usable, because
             if key.contains(&socket.port()) {
-                payload = value;
+                payload = value; //ownership transfer happens here
             }
         }
 
@@ -268,7 +270,7 @@ impl Scanner {
         match self.udp_bind(socket).await {
             Ok(udp_socket) => {
                 let mut buf = [0u8; 1024];
-
+                //
                 udp_socket.connect(socket).await?;
                 udp_socket.send(payload).await?;
 
